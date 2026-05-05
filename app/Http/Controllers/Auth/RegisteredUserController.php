@@ -48,10 +48,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        $role = $request->role;
-        if ($role === 'student') {
-            return redirect(route('profile.edit', absolute: false));
-        }
-        return redirect(route('students.index', absolute: false));
+        return redirect(route('dashboard', absolute: false));
     }
 }
