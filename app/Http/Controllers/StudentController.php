@@ -15,7 +15,17 @@ class StudentController extends Controller
         if (auth()->user()->role === 'student') {
             abort(403, 'Students cannot access student records.');
         }
-        $students = Student::all();
+
+        $status = request('status', 'all');
+
+        $studentsQuery = Student::query();
+        if ($status === '1') {
+            $studentsQuery->where('status', true);
+        } elseif ($status === '0') {
+            $studentsQuery->where('status', false);
+        }
+
+        $students = $studentsQuery->latest('id')->get();
         return view('students.index', compact('students'));
     }
 

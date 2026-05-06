@@ -15,11 +15,25 @@
                         </div>
                     @endif
 
-                    <div class="mb-4">
+                    <div class="mb-4 flex items-center gap-3">
                         @if (auth()->user()->role === 'admin')
                             <a href="{{ route('students.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                 Add New Student
                             </a>
+                        @endif
+
+                        @if (auth()->user()->role === 'admin')
+                            <div class="relative">
+                                <form method="GET" action="{{ route('students.index') }}">
+                                    <label class="text-sm font-semibold text-gray-700 mr-2">Filter status:</label>
+                                    <select name="status" class="border border-gray-300 rounded px-3 py-2">
+                                        <option value="all" {{ request('status') === null || request('status') === 'all' ? 'selected' : '' }}>All</option>
+                                        <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Active</option>
+                                        <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>Inactive</option>
+                                    </select>
+                                    <button type="submit" class="bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2">Apply</button>
+                                </form>
+                            </div>
                         @endif
                     </div>
 
